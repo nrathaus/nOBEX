@@ -162,6 +162,7 @@ def _verify_bluez_version():
     if val.returncode != 0:
         raise SDPException("Failed to get bluez version! Error: %i" % val.returncode)
     verstr = val.stdout[14:-1]
+    print(f"{verstr=}")
     smajor, sminor = verstr.split(b'.')
     major = int(smajor)
     minor = int(sminor)
