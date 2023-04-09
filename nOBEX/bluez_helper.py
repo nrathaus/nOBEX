@@ -169,7 +169,7 @@ def _verify_bluez_version():
     if (major < 5) or (major == 5 and minor < 49):
         raise SDPException("bluez 5.49 or newer required! you have bluez %i.%i" % (major, minor))
 
-    if (major >= 5 and minor >= 65):
+    if major > 5 or (major == 5 and minor >= 65):
         # 5.65 moved to "devices Paired"
         global _bluez_devices_Paired
         _bluez_devices_Paired = True
@@ -184,7 +184,7 @@ def list_paired_devices():
     devs = set()
 
     if _bluez_devices_Paired:
-        val = subrun(["bluetoothctl", "devices Paired"], stdout=subprocess.PIPE)
+        val = subrun(["bluetoothctl", "devices", "Paired"], stdout=subprocess.PIPE)
     else:
         val = subrun(["bluetoothctl", "paired-devices"], stdout=subprocess.PIPE)
 
